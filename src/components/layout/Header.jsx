@@ -23,7 +23,7 @@ const Header = () => {
         isautheticate?<div className='d-fllex flex-row justify-content-center'> 
         
 
-           <a className="btn m-2" id="login_btn"  href='http://localhost:3000/api-doc' target='_blank'>api-doc</a>
+           <a className="btn m-2" id="login_btn"  href='https://portalbackend-x872.onrender.com/api-doc' target='_blank'>api-doc</a>
            <Link to={"/"} ><button onClick={getallprofile}className="btn " id="login_btn">All Users</button></Link>
            
         <Dropdown className='d-inline' >
