@@ -8,6 +8,7 @@ import Usercontextproviderproducts from './Usercontextproviderproducts';
 import Register from '../components/layout/Register';
 import Profile from '../components/layout/Profile';
 import Myprofileupdate from '../components/layout/Myprofileupdate';
+import Allprofileedit from '../components/layout/Allprofileedit';
 
 
 
@@ -25,6 +26,7 @@ const Frotendfilenav = () => {
            <Route path='/myprofile'element={<Profile/>}/>
            <Route path='/Register'element={<Register/>}/> 
            <Route path='/myprofile/update'element={<Myprofileupdate/>}/>
+           <Route path='/allprofileedit'element={<Allprofileedit/>}/>
            <Route path='/footer'element={<Footer/>}/> 
            </Routes>
            </Usercontextproviderproducts>

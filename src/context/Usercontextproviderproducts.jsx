@@ -26,9 +26,11 @@ const Usercontextproviderproducts = ({children}) => {
     const[avatarPreview,setavatarPreview]=useState("/images/default_avatar.png")
     
     const [myprofile,setmyprofile]=useState([])
+   
     const [isautheticate,setautheticate]=useState(false)
   
      const [profileformdate,setprofileform]=useState({})
+     const [allprofileformdate,setallprofileform]=useState({})
      const [isupdate,setupdate]=useState(false)
 
      const [profilepasswordformdate,setprofilepasswordform]=useState({})
@@ -37,7 +39,11 @@ const Usercontextproviderproducts = ({children}) => {
      
     const [allprofilslist,setallprofilelist]=useState([])
     
- 
+    const [myprofile2,setmyprofile2]=useState([])
+    const [Updateid,setupdateid]=useState()
+
+
+
      const getprofile=async()=>{
 
        try {
@@ -64,8 +70,8 @@ const Usercontextproviderproducts = ({children}) => {
      
  }
     //  useEffect(()=>{
-    //      getprofile()
-    //     },[])
+    //       getprofile()
+    //      },[])
 
 
 
@@ -80,6 +86,7 @@ const Usercontextproviderproducts = ({children}) => {
               "token":token
           },})
           setallprofilelist(data.data)
+          setavatarPreview(data.data[0].avatar)
          setautheticate(true)
             setisloading(false)
            } catch (error) {
@@ -100,23 +107,37 @@ const Usercontextproviderproducts = ({children}) => {
    
     const getprofileupdate=async(e)=>{
         e.preventDefault()
+
+        const token=  localStorage.getItem("token")
+        const formData = new FormData();
+        formData.append('name', profileformdate.name)
+        formData.append('email', profileformdate.email)
+        formData.append('password',profileformdate.password)
+        formData.append('avatar', avatar);
+      
+        const config = {
+            headers: {
+               "token":token,
+            }}
+
+
+
         try {
         
             setupdate(true)
             setisloading(true)
-            const token=  localStorage.getItem("token")
-          const {data}= await axios.put(`https://portalbackend-x872.onrender.com/api/usersupdate`,{name:profileformdate.name,email:profileformdate.email,
-            password:profileformdate.password,avatar:avatarPreview},{headers:{
-            "token":token
-        },})
+            
+          const {data}= await axios.put(`https://portalbackend-x872.onrender.com/api/usersupdate`,formData, config)
         
         getprofile()
-
+       
         toast.success(data.message, {
             position:"bottom-center",
             theme:"dark",
             });
-        setprofileform({...profileformdate,name:"",email:"",avatar:"",password:""})
+            setprofileform({...profileformdate,name:"",password:"",email:"",})
+         setavatarPreview("/images/default_avatar.png")
+         setavatar("")
          setupdate(false)
           setisloading(false)
          } catch (error) {
@@ -158,10 +179,11 @@ const Usercontextproviderproducts = ({children}) => {
                  position:"top-center",
                  theme:"light",
                 });
+                
                 navigate("/")
                 setemail("")
                 setpassword("")
-                getprofile()
+                await getprofile()
              setisloading(false)
           } catch (error) {
            setisloading(false)
@@ -180,11 +202,22 @@ const Usercontextproviderproducts = ({children}) => {
         const register=async(e)=>{
               
             e.preventDefault();
+
+
+            const formData = new FormData();
+            formData.append('name', userregisterdata.name)
+            formData.append('email', userregisterdata.email)
+            formData.append('password', userregisterdata.password)
+            formData.append('avatar', avatar);
+          
+            const config = {
+                headers: {
+                    'Content-type': 'multipart/form-data'
+                }}
+
             try {
                 setisloading(true)
-                
-               const {data}= await axios.post(`https://portalbackend-x872.onrender.com/api/register`,{name:userregisterdata.name,
-                email:userregisterdata.email,password:userregisterdata.password,avatar:avatarPreview})
+               const {data}= await axios.post(`https://portalbackend-x872.onrender.com/api/register`,formData, config)
                 console.log(data);
                 
                  toast.success(data.message, {
@@ -279,7 +312,111 @@ const Usercontextproviderproducts = ({children}) => {
             
             }
             
+            const deletealluser=async(id)=>{
+     
+                try {
+                    setisloading(true)
+                    const token=  localStorage.getItem("token")
+                    const {data}= await axios.delete(`https://portalbackend-x872.onrender.com/api/useralldelete/${id}`,{headers:{
+                      "token":token
+                  },})
+                  console.log(data);
+                   navigate("/")
+                   await getallprofile()
+                  toast.success(data.message, {
+                    position:"bottom-center",
+                    theme:"dark",
+                    });
+                  setisloading(false)
+                 } catch (error) {
+                  setisloading(false)
+                  toast.error(error.response.data.data, {
+                      position:"bottom-center",
+                      theme:"dark",
+                      });
+                  console.log(error);
+                  
+                 }
             
+            }
+               
+            
+
+            const getprofileid=async(id)=>{
+
+                try {
+                     setisloading(true)
+                      const token=  localStorage.getItem("token")
+                    const {data}= await axios.get(`https://portalbackend-x872.onrender.com/api/alluser/${id}`,{headers:{
+                      "token":token
+                  },})
+                  console.log(data.data);
+                  setmyprofile2(data.data)
+                  setavatarPreview(data.data[0].avatar)
+                  navigate("/allprofileedit")
+                    setisloading(false)
+                   } catch (error) {
+                     console.log(error);
+                     
+                    setautheticate(false)
+                    setisloading(false)
+                   toast.error(error.response.data.message, {
+                        position:"bottom-center",
+                       theme:"dark",
+                       });
+                   
+                   }
+              
+          }
+
+
+          const getallprofileupdate=async(e)=>{
+
+            e.preventDefault()
+            const token=  localStorage.getItem("token")
+            const formData = new FormData();
+            formData.append('name', allprofileformdate.name)
+            formData.append('email', allprofileformdate.email)
+            formData.append('password',allprofileformdate.password)
+            formData.append('avatar', avatar);
+          
+            const config = {
+                headers: {
+                   "token":token,
+                }} 
+            try {
+            
+                setupdate(true)
+                setisloading(true)
+                
+              const {data}= await axios.put(`https://portalbackend-x872.onrender.com/api/usersallupdate/${Updateid}`,formData, config)
+            
+              navigate("/")
+              await  getallprofile()
+              setallprofileform({...allprofileformdate,name:"",password:"",email:"",})
+            toast.success(data.message, {
+                position:"bottom-center",
+                theme:"dark",
+                });
+             setavatarPreview("/images/default_avatar.png")
+             setavatar("")
+             setupdate(false)
+              setisloading(false)
+             } catch (error) {
+                setupdate(false)
+              setisloading(false)
+              console.log(error.response);
+            
+              toast.error(error.response.data.message, {
+                  position:"bottom-center",
+                  theme:"dark",
+                  });
+              
+             }
+         
+        }
+
+
             
             
             
@@ -293,7 +430,8 @@ const Usercontextproviderproducts = ({children}) => {
                email,setemail,password,setpassword,login,isloading,isupdatepassword,profilepasswordformdate,
                setprofilepasswordform,profileformdate,setprofileform,isupdate,
                setupdate,getprofileupdate,setavatarPreview,setavatar,userregisterdata,setuseregisterdata,register,
-               avatar,getallprofile,allprofilslist, deleteuser
+               avatar,getallprofile,allprofilslist, deleteuser,setisloading,deletealluser,setmyprofile2,myprofile2,
+               getprofileid,allprofileformdate,setallprofileform, getallprofileupdate,Updateid,setupdateid
             }}>
             <ToastContainer theme="dark"/>     
                      {children}

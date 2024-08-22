@@ -1,15 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import createusercontextdata from '../../context/Usercontext';
+import { Link } from 'react-router-dom';
 
-const Myprofileupdate = () => {
-    const {profileformdate,setprofileform,isupdate,setupdate,getprofileupdate,setavatarPreview,setavatar,avatarPreview, myprofile}=useContext(createusercontextdata)
-    const handleinputchange=(e)=>{
+const Allprofileedit = () => {
+    const {profileformdate,setprofileform,isupdate,allprofileformdate,setallprofileform,
+        getallprofileupdate,Updateid,setupdateid ,setupdate,getprofileupdate,setavatarPreview,setavatar,avatarPreview,myprofile2, myprofile}=useContext(createusercontextdata)
+           
+           
+           
+            const[avatarPreview2,setavatarPreview2]=useState("")
+            const handleinputchange=(e)=>{
    
         if(e.target.name=="avatar"){
           const reader=new FileReader()
        reader.onload=()=>{
         if(reader.readyState==2){
-          setavatarPreview(reader.result)
+          setavatarPreview2(reader.result)
           setavatar(e.target.files[0])
         }
        }
@@ -18,20 +24,20 @@ const Myprofileupdate = () => {
         }
         else{
           const {name,value}=e.target
-          setprofileform({...profileformdate,[name]:value})
+          setallprofileform({...allprofileformdate,[name]:value})
+          setupdateid(myprofile2[0].id)
        
         }
+        
     }
 
-    console.log(profileformdate);
     return (
         <div>
              <div className="container-container-fluid">
        <div className="row wrapper">
                 <div className="col-10 col-lg-5">
-                    <form className="shadow-lg" onSubmit={getprofileupdate} encType='multipart/form-data'>
+                    <form className="shadow-lg" onSubmit={getallprofileupdate} encType='multipart/form-data'>
                         <h1 className="mt-2 mb-5">Update Profile</h1>
-
                         <div className="form-group">
                             <label htmlFor="email_field">Name</label>
                             <input 
@@ -39,8 +45,8 @@ const Myprofileupdate = () => {
 								id="name_field" 
 								className="form-control"
                                 name='name'
-                                value={profileformdate.name}
-                                placeholder={myprofile[0].name}
+                                placeholder={myprofile2[0].name}
+                                value={allprofileformdate.name}
                                 onChange={handleinputchange}
                                 required={true}
                             />
@@ -53,9 +59,8 @@ const Myprofileupdate = () => {
                                 id="email_field"
                                 className="form-control"
                                 name='email'
-                               
-                                placeholder={myprofile[0].email}
-                                value={profileformdate.email}
+                                placeholder={myprofile2[0].email}
+                                value={allprofileformdate.email}
                                 onChange={handleinputchange}
                                 required={true}
                             />
@@ -68,7 +73,8 @@ const Myprofileupdate = () => {
                                 id="new_password_field"
                                 name='password'
                                 className="form-control"
-                               value={profileformdate.password}
+                               value={allprofileformdate.password}
+                               placeholder={myprofile2[0].password}
                                 onChange={handleinputchange}
                                 required={true}
                                 
@@ -80,25 +86,23 @@ const Myprofileupdate = () => {
                             <label  htmlFor='avatar_upload'>Avatar</label>
                             <div className='d-flex align-items-center'>
                                 <div>
-                                    { myprofile[0].avatar?<figure className='avatar mr-3 item-rtl'>
+                                   
+                                   {myprofile2[0].avatar&&!avatarPreview2?  <figure className='avatar mr-3 item-rtl'>
                                         <img
-                                           src={ myprofile[0].avatar}
+                                           src={myprofile2[0].avatar}
+                                            className='rounded-circle'
+                                            alt='No Image'
+                                        
+                                        />
+                                    </figure>:  <figure className='avatar mr-3 item-rtl'>
+                                        <img
+                                           src={avatarPreview2}
                                             className='rounded-circle'
                                             alt='Avatar Preview'
                                         
                                         />
-                                    </figure>:<figure className='avatar mr-3 item-rtl'>
-                                        <img
-                                           src={avatarPreview}
-                                            className='rounded-circle'
-                                            alt='Avatar Preview'
-                                        
-                                        />
-                                    </figure>
-    
-                                    
-                                    
-                                    }
+                                    </figure>}
+                                  
                                 </div>
                                 <div className='custom-file'>
                                     <input
@@ -115,7 +119,8 @@ const Myprofileupdate = () => {
                             </div>
                         </div>
 
-                        <button  disabled={isupdate}  type="submit"  className="btn update-btn btn-block mt-4 mb-3" >Update</button>
+                        <button  disabled={isupdate}  type="submit"  className="btn update-btn btn-block mt-4 " >Update</button>
+                        <Link to={"/"} className="btn " id="login_btn">Cancel</Link>
                     </form>
                 </div>
             </div>
@@ -125,4 +130,5 @@ const Myprofileupdate = () => {
     );
 };
 
-export default Myprofileupdate;
+
+export default Allprofileedit;

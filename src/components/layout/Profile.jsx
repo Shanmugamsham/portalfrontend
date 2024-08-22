@@ -3,14 +3,23 @@ import { Link } from 'react-router-dom';
 import createusercontextdata from '../../context/Usercontext';
 
 const Profile = () => {
-    const {  myprofile, deleteuser}=useContext(createusercontextdata)
+    const {  myprofile, deleteuser,avatarPreview, setisloading}=useContext(createusercontextdata)
+
+   
+
+
     return (
         <div>
                <div className="row justify-content-around mt-5 user-info">
             <div className="col-12 col-md-3">
-                <figure className='avatar avatar-profile'>
-                    { <img className="rounded-circle img-fluid" src={'./images/default_avatar.png'} alt='' /> }
-                </figure>
+            { myprofile[0].avatar? <figure className='avatar avatar-profile'>
+                    {   
+                        <img className="rounded-circle img-fluid" src={myprofile[0].avatar} alt='' /> }
+                </figure>:<figure className='avatar avatar-profile'>
+                    {   
+                        <img className="rounded-circle img-fluid" src="images/default_avatar.png" alt='' /> }
+                </figure>  }
+                
                 <Link to="/myprofile/update" id="edit_profile" className="btn btn-primary btn-block my-5">
                     Edit Profile
                 </Link>

@@ -1,10 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import createusercontextdata from '../../context/Usercontext';
 
 const Register = () => {
    
    const{userregisterdata,setuseregisterdata,register,avatar,setavatar,avatarPreview,setavatarPreview,isloading}= useContext(createusercontextdata)
-  
+   
+  //  const [file,setfile]=useState()
+  //  const [filename,setfilename]=useState("")
+  // const fileinput=useRef()
+
    const handleinputchange=(e)=>{
    
     if(e.target.name=="avatar"){
@@ -25,6 +29,17 @@ const Register = () => {
     }
 }
 
+
+//  const sivefile=()=>{
+//     setfile(fileinput.current.file[0])
+//     setfilename(fileinput.current.file[0].name)
+//  }
+
+//  const upload=()=>{
+//   const formdata=new FormData()
+//   formdata.append('file',file)
+//   formdata
+//  }
 
     return (
         <div>
@@ -77,6 +92,7 @@ const Register = () => {
                   </div>
                   <div className='custom-file'>
                       <input
+                        // ref={fileinput}
                           type='file'
                           name='avatar'
                           className='custom-file-input'
