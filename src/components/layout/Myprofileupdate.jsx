@@ -1,15 +1,19 @@
 import React, { useContext } from 'react';
 import createusercontextdata from '../../context/Usercontext';
+import { useState } from 'react';
 
 const Myprofileupdate = () => {
-    const {profileformdate,setprofileform,isupdate,setupdate,getprofileupdate,setavatarPreview,setavatar,avatarPreview, myprofile}=useContext(createusercontextdata)
+    const {profileformdate,setprofileform,setmyprofile,isupdate,setupdate,getprofileupdate,setavatarPreview,setavatar,avatarPreview, myprofile}=useContext(createusercontextdata)
+    
+    const [avatarshow,setshoavatarPreview]=useState("/images/default_avatar.png")
+    
     const handleinputchange=(e)=>{
    
         if(e.target.name=="avatar"){
           const reader=new FileReader()
        reader.onload=()=>{
         if(reader.readyState==2){
-          setavatarPreview(reader.result)
+         setshoavatarPreview(reader.result)
           setavatar(e.target.files[0])
         }
        }
@@ -18,12 +22,11 @@ const Myprofileupdate = () => {
         }
         else{
           const {name,value}=e.target
-          setprofileform({...profileformdate,[name]:value})
+          setmyprofile({...myprofile,[name]:value})
        
         }
     }
 
-    console.log(profileformdate);
     return (
         <div>
              <div className="container-container-fluid">
@@ -39,8 +42,7 @@ const Myprofileupdate = () => {
 								id="name_field" 
 								className="form-control"
                                 name='name'
-                                value={profileformdate.name}
-                                placeholder={myprofile[0].name}
+                                value={myprofile.name}
                                 onChange={handleinputchange}
                                 required={true}
                             />
@@ -54,8 +56,8 @@ const Myprofileupdate = () => {
                                 className="form-control"
                                 name='email'
                                
-                                placeholder={myprofile[0].email}
-                                value={profileformdate.email}
+                             
+                                value={myprofile.email}
                                 onChange={handleinputchange}
                                 required={true}
                             />
@@ -68,7 +70,7 @@ const Myprofileupdate = () => {
                                 id="new_password_field"
                                 name='password'
                                 className="form-control"
-                               value={profileformdate.password}
+                               value={myprofile.password}
                                 onChange={handleinputchange}
                                 required={true}
                                 
@@ -80,21 +82,16 @@ const Myprofileupdate = () => {
                             <label  htmlFor='avatar_upload'>Avatar</label>
                             <div className='d-flex align-items-center'>
                                 <div>
-                                    { myprofile[0].avatar?<figure className='avatar mr-3 item-rtl'>
+                                    {<figure className='avatar mr-3 item-rtl'>
                                         <img
-                                           src={ myprofile[0].avatar}
-                                            className='rounded-circle'
-                                            alt='Avatar Preview'
-                                        
-                                        />
-                                    </figure>:<figure className='avatar mr-3 item-rtl'>
-                                        <img
-                                           src={avatarPreview}
+                                           src={avatarshow
+                                           }
                                             className='rounded-circle'
                                             alt='Avatar Preview'
                                         
                                         />
                                     </figure>
+                                    
     
                                     
                                     
@@ -107,6 +104,7 @@ const Myprofileupdate = () => {
                                         className='custom-file-input'
                                         id='customFile'
                                         onChange={handleinputchange}
+            
                                     />
                                     <label className='custom-file-label'  htmlFor='customFile'>
                                         Choose Avatar

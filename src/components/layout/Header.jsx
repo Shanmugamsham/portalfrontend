@@ -29,15 +29,15 @@ const Header = () => {
         <Dropdown className='d-inline' >
         <Dropdown.Toggle variant='default text-white pr-5' id='dropdown-basic'>
          
-        {myprofile[0].avatar?<figure className='avatar avatar-nav'>
+        {myprofile.avatar?<figure className='avatar avatar-nav'>
            
-           <Image width="50px" src={myprofile[0].avatar}  />
+           <Image width="50px" src={myprofile.avatar}  />
          </figure>:  <figure className='avatar avatar-nav'>
            
            <Image width="50px" src="/images/default_avatar.png"  />
          </figure>}
         
-          <span>{myprofile[0].name}</span>
+          <span>{myprofile.name}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
         <Dropdown.Item onClick={() => {navigate('/myprofile')}} className='text-dark'>Profile</Dropdown.Item>

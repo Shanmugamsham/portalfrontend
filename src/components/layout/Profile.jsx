@@ -12,9 +12,9 @@ const Profile = () => {
         <div>
                <div className="row justify-content-around mt-5 user-info">
             <div className="col-12 col-md-3">
-            { myprofile[0].avatar? <figure className='avatar avatar-profile'>
+            { myprofile.avatar? <figure className='avatar avatar-profile'>
                     {   
-                        <img className="rounded-circle img-fluid" src={myprofile[0].avatar} alt='' /> }
+                        <img className="rounded-circle img-fluid" src={myprofile.avatar} alt='' /> }
                 </figure>:<figure className='avatar avatar-profile'>
                     {   
                         <img className="rounded-circle img-fluid" src="images/default_avatar.png" alt='' /> }
@@ -30,10 +30,10 @@ const Profile = () => {
     
             <div className="col-12 col-md-5">
                 <h4>Full Name</h4>
-                <p>{myprofile[0].name}</p>
+                <p>{myprofile.name}</p>
     
                 <h4>Email Address</h4>
-                <p>{myprofile[0].email}</p>
+                <p>{myprofile.email}</p>
 
 
             </div>

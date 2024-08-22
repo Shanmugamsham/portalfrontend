@@ -3,12 +3,12 @@ import createusercontextdata from '../../context/Usercontext';
 import { Link } from 'react-router-dom';
 
 const Allprofileedit = () => {
-    const {profileformdate,setprofileform,isupdate,allprofileformdate,setallprofileform,
+    const {profileformdate,setprofileform,isupdate,allprofileformdate,setallprofileform, setmyprofile2,
         getallprofileupdate,Updateid,setupdateid ,setupdate,getprofileupdate,setavatarPreview,setavatar,avatarPreview,myprofile2, myprofile}=useContext(createusercontextdata)
            
            
            
-            const[avatarPreview2,setavatarPreview2]=useState("")
+            const[avatarPreview2,setavatarPreview2]=useState("/images/default_avatar.png")
             const handleinputchange=(e)=>{
    
         if(e.target.name=="avatar"){
@@ -24,12 +24,14 @@ const Allprofileedit = () => {
         }
         else{
           const {name,value}=e.target
-          setallprofileform({...allprofileformdate,[name]:value})
-          setupdateid(myprofile2[0].id)
+          setmyprofile2({...myprofile2,[name]:value})
+          setupdateid(myprofile2.id)
        
         }
         
     }
+    console.log(myprofile2);
+    
 
     return (
         <div>
@@ -45,8 +47,7 @@ const Allprofileedit = () => {
 								id="name_field" 
 								className="form-control"
                                 name='name'
-                                placeholder={myprofile2[0].name}
-                                value={allprofileformdate.name}
+                                value={myprofile2.name}
                                 onChange={handleinputchange}
                                 required={true}
                             />
@@ -59,8 +60,8 @@ const Allprofileedit = () => {
                                 id="email_field"
                                 className="form-control"
                                 name='email'
-                                placeholder={myprofile2[0].email}
-                                value={allprofileformdate.email}
+                                placeholder={myprofile2.email}
+                                value={myprofile2.email}
                                 onChange={handleinputchange}
                                 required={true}
                             />
@@ -73,8 +74,7 @@ const Allprofileedit = () => {
                                 id="new_password_field"
                                 name='password'
                                 className="form-control"
-                               value={allprofileformdate.password}
-                               placeholder={myprofile2[0].password}
+                               value={myprofile2.password}
                                 onChange={handleinputchange}
                                 required={true}
                                 
@@ -87,21 +87,14 @@ const Allprofileedit = () => {
                             <div className='d-flex align-items-center'>
                                 <div>
                                    
-                                   {myprofile2[0].avatar&&!avatarPreview2?  <figure className='avatar mr-3 item-rtl'>
+                                     <figure className='avatar mr-3 item-rtl'>
                                         <img
-                                           src={myprofile2[0].avatar}
+                                           src={myprofile2.avatar||avatarPreview2}
                                             className='rounded-circle'
                                             alt='No Image'
                                         
                                         />
-                                    </figure>:  <figure className='avatar mr-3 item-rtl'>
-                                        <img
-                                           src={avatarPreview2}
-                                            className='rounded-circle'
-                                            alt='Avatar Preview'
-                                        
-                                        />
-                                    </figure>}
+                                    </figure>
                                   
                                 </div>
                                 <div className='custom-file'>

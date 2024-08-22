@@ -25,8 +25,7 @@ const Usercontextproviderproducts = ({children}) => {
     const[avatar,setavatar]=useState("")
     const[avatarPreview,setavatarPreview]=useState("/images/default_avatar.png")
     
-    const [myprofile,setmyprofile]=useState([])
-   
+    
     const [isautheticate,setautheticate]=useState(false)
   
      const [profileformdate,setprofileform]=useState({})
@@ -39,7 +38,24 @@ const Usercontextproviderproducts = ({children}) => {
      
     const [allprofilslist,setallprofilelist]=useState([])
     
-    const [myprofile2,setmyprofile2]=useState([])
+    const [myprofile2,setmyprofile2]=useState({
+      id:"",
+      name:"",
+      email:"",
+      password:"",
+      avatar:""
+    })
+    
+    const [myprofile,setmyprofile]=useState({
+      id:"",
+      name:"",
+      email:"",
+      password:"",
+      avatar:""
+    })
+   
+
+
     const [Updateid,setupdateid]=useState()
 
 
@@ -53,7 +69,10 @@ const Usercontextproviderproducts = ({children}) => {
              "token":token
          },})
          console.log(data);
-         setmyprofile(data.data)
+         setmyprofile({...myprofile,name:data.data[0].name,password:data.data[0].password,email:data.data[0].email
+          ,avatar:data.data[0].avatar,id:data.data[0].id
+        })
+
         setautheticate(true)
            setisloading(false)
           } catch (error) {
@@ -107,12 +126,13 @@ const Usercontextproviderproducts = ({children}) => {
    
     const getprofileupdate=async(e)=>{
         e.preventDefault()
-
+        console.log("gettprofilecalle");
+        
         const token=  localStorage.getItem("token")
         const formData = new FormData();
-        formData.append('name', profileformdate.name)
-        formData.append('email', profileformdate.email)
-        formData.append('password',profileformdate.password)
+        formData.append('name', myprofile.name)
+        formData.append('email', myprofile.email)
+        formData.append('password',myprofile.password)
         formData.append('avatar', avatar);
       
         const config = {
@@ -127,10 +147,10 @@ const Usercontextproviderproducts = ({children}) => {
             setupdate(true)
             setisloading(true)
             
-          const {data}= await axios.put(`https://portalbackend-x872.onrender.com/api/usersupdate`,formData, config)
+          const {data}= await axios.put(`https://portalbackend-x872.onrender.com/api/userupdate`,formData, config)
         
         getprofile()
-       
+        navigate("/myprofile")
         toast.success(data.message, {
             position:"bottom-center",
             theme:"dark",
@@ -351,7 +371,9 @@ const Usercontextproviderproducts = ({children}) => {
                       "token":token
                   },})
                   console.log(data.data);
-                  setmyprofile2(data.data)
+                  setmyprofile2({...myprofile2,name:data.data[0].name,password:data.data[0].password,email:data.data[0].email
+                    ,avatar:data.data[0].avatar,id:data.data[0].id
+                  })
                   setavatarPreview(data.data[0].avatar)
                   navigate("/allprofileedit")
                     setisloading(false)
@@ -375,11 +397,11 @@ const Usercontextproviderproducts = ({children}) => {
             e.preventDefault()
             const token=  localStorage.getItem("token")
             const formData = new FormData();
-            formData.append('name', allprofileformdate.name)
-            formData.append('email', allprofileformdate.email)
-            formData.append('password',allprofileformdate.password)
+            formData.append('name', myprofile2.name)
+            formData.append('email', myprofile2.email)
+            formData.append('password',myprofile2.password)
             formData.append('avatar', avatar);
-          
+
             const config = {
                 headers: {
                    "token":token,
@@ -431,7 +453,7 @@ const Usercontextproviderproducts = ({children}) => {
                setprofilepasswordform,profileformdate,setprofileform,isupdate,
                setupdate,getprofileupdate,setavatarPreview,setavatar,userregisterdata,setuseregisterdata,register,
                avatar,getallprofile,allprofilslist, deleteuser,setisloading,deletealluser,setmyprofile2,myprofile2,
-               getprofileid,allprofileformdate,setallprofileform, getallprofileupdate,Updateid,setupdateid
+               getprofileid,allprofileformdate,setallprofileform, getallprofileupdate,Updateid,setupdateid,setmyprofile,
             }}>
             <ToastContainer theme="dark"/>     
                      {children}
