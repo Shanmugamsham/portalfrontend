@@ -6,7 +6,7 @@ const Allprofileedits = () => {
     const {profileformdate,setprofileform,isupdate,allprofileformdate,setallprofileform, setmyprofile2,
         getallprofileupdate,Updateid,setupdateid ,setupdate,getprofileupdate,setavatarPreview,setavatar,avatarPreview,myprofile2, myprofile}=useContext(createusercontextdata)
 
-            const[avatarPreview2,setavatarPreview2]=useState("/images/default_avatar.png")
+            const[avatarPreview2,setavatarPreview2]=useState()
             const handleinputchange=(e)=>{
         if(e.target.name=="avatar"){
           const reader=new FileReader()
@@ -57,7 +57,7 @@ const Allprofileedits = () => {
                                 id="email_field"
                                 className="form-control"
                                 name='email'
-                            
+                                placeholder={myprofile2.email}
                                 value={myprofile2.email}
                                 onChange={handleinputchange}
                                 required={true}
@@ -83,15 +83,27 @@ const Allprofileedits = () => {
                             <label  htmlFor='avatar_upload'>Avatar</label>
                             <div className='d-flex align-items-center'>
                                 <div>
-                                   
-                                     <figure className='avatar mr-3 item-rtl'>
+                                    {
+                                        avatarPreview2?<figure className='avatar mr-3 item-rtl'>
                                         <img
-                                           src={avatarPreview2}
+                                           src={avatarPreview2||"/images/default_avatar.png"}
+                                            className='rounded-circle'
+                                            alt='No Image'
+                                        
+                                        />
+                                    </figure>:
+                                    
+                                    <figure className='avatar mr-3 item-rtl'>
+                                        <img
+                                           src={myprofile2.avatar||"/images/default_avatar.png"}
                                             className='rounded-circle'
                                             alt='No Image'
                                         
                                         />
                                     </figure>
+
+                                    }
+                                   
                                   
                                 </div>
                                 <div className='custom-file'>

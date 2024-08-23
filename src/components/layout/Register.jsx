@@ -51,7 +51,8 @@ const Register = () => {
 
           <div className="form-group">
             <label htmlFor="email_field">Name</label>
-            <input type="name" id="name_field" className="form-control" name='name' value={userregisterdata.name} onChange={handleinputchange} required/>
+            <input type="name" id="name_field" className="form-control" name='name' autoComplete="on"
+             value={userregisterdata.name} onChange={handleinputchange} required/>
           </div>
 
             <div className="form-group">
@@ -62,6 +63,7 @@ const Register = () => {
                 className="form-control"
                  name='email'
                 value={userregisterdata.email} onChange={handleinputchange}
+                autoComplete="on"
                 required
               />
             </div>
@@ -74,6 +76,7 @@ const Register = () => {
                 className="form-control"
                  name='password'
                 value={userregisterdata.password} onChange={handleinputchange}
+                autoComplete="on"
                 required
               />
             </div>

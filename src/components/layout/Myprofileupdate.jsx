@@ -5,7 +5,7 @@ import { useState } from 'react';
 const Myprofileupdate = () => {
     const {profileformdate,setprofileform,setmyprofile,isupdate,setupdate,getprofileupdate,setavatarPreview,setavatar,avatarPreview, myprofile}=useContext(createusercontextdata)
     
-    const [avatarshow,setshoavatarPreview]=useState("/images/default_avatar.png")
+    const [avatarshow,setshoavatarPreview]=useState()
     
     const handleinputchange=(e)=>{
    
@@ -83,7 +83,7 @@ const Myprofileupdate = () => {
                             <label  htmlFor='avatar_upload'>Avatar</label>
                             <div className='d-flex align-items-center'>
                                 <div>
-                                    {<figure className='avatar mr-3 item-rtl'>
+                                    {/* {<figure className='avatar mr-3 item-rtl'>
                                         <img
                                            src={avatarshow
                                            }
@@ -91,9 +91,25 @@ const Myprofileupdate = () => {
                                             alt='Avatar Preview'
                                         
                                         />
-                                    </figure>
+                                    </figure> */
                                     
-    
+                                    avatarshow?<figure className='avatar mr-3 item-rtl'>
+                                    <img
+                                       src={avatarshow||"/images/default_avatar.png"}
+                                        className='rounded-circle'
+                                        alt='No Image'
+                                    
+                                    />
+                                </figure>:
+                                
+                                <figure className='avatar mr-3 item-rtl'>
+                                    <img
+                                       src={myprofile.avatar||"/images/default_avatar.png"}
+                                        className='rounded-circle'
+                                        alt='No Image'
+                                    
+                                    />
+                                </figure>
                                     
                                     
                                     }

@@ -27,6 +27,7 @@ const Logindata = () => {
                 className="form-control"
                 value={email}
                 onChange={(e)=>setemail(e.target.value)}
+                  autoComplete="on"
                 required
               />
             </div>
@@ -39,6 +40,7 @@ const Logindata = () => {
                 className="form-control"
                 value={password}
                 onChange={(e)=>setpassword(e.target.value)}
+                  autoComplete="on"
                 required
               />
             </div>
