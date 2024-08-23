@@ -57,7 +57,7 @@ const Allprofileedits = () => {
                                 id="email_field"
                                 className="form-control"
                                 name='email'
-                                placeholder={myprofile2.email}
+                            
                                 value={myprofile2.email}
                                 onChange={handleinputchange}
                                 required={true}
