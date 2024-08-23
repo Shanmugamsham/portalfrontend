@@ -73,6 +73,7 @@ const Myprofileupdate = () => {
                                value={myprofile.password}
                                 onChange={handleinputchange}
                                 required={true}
+                                aut
                                 
                             />
 

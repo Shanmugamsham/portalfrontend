@@ -126,7 +126,7 @@ const Usercontextproviderproducts = ({children}) => {
    
     const getprofileupdate=async(e)=>{
         e.preventDefault()
-        console.log("gettprofilecalle");
+    
         
         const token=  localStorage.getItem("token")
         const formData = new FormData();
@@ -134,13 +134,13 @@ const Usercontextproviderproducts = ({children}) => {
         formData.append('email', myprofile.email)
         formData.append('password',myprofile.password)
         formData.append('avatar', avatar);
-      
+       
         const config = {
             headers: {
                "token":token,
             }}
 
-
+            console.log(formData,Updateid,myprofile.name)
 
         try {
         
@@ -393,42 +393,35 @@ const Usercontextproviderproducts = ({children}) => {
 
 
           const getallprofileupdate=async(e)=>{
-
             e.preventDefault()
-            const token=  localStorage.getItem("token")
-            const formData = new FormData();
-            formData.append('name', myprofile2.name)
-            formData.append('email', myprofile2.email)
-            formData.append('password',myprofile2.password)
-            formData.append('avatar', avatar);
 
+            const token=  localStorage.getItem("token")
+            const Datas = new FormData();
+            Datas.append('name', myprofile2.name)
+            Datas.append('email', myprofile2.email)
+            Datas.append('password',myprofile2.password)
+            Datas.append('avatar', avatar);
+            
             const config = {
                 headers: {
                    "token":token,
                 }} 
-            try {
-            
-                setupdate(true)
-                setisloading(true)
+                console.log(Datas,Updateid,myprofile2.name);
                 
-              const {data}= await axios.put(`https://portalbackend-x872.onrender.com/api/usersallupdate/${Updateid}`,formData, config)
-            
+            try {
+                setisloading(true)
+              const {data}= await axios.put(`https://portalbackend-x872.onrender.com/api/usersallupdate/${Updateid}`,Datas, config)
               navigate("/")
               await  getallprofile()
-              setallprofileform({...allprofileformdate,name:"",password:"",email:"",})
             toast.success(data.message, {
                 position:"bottom-center",
                 theme:"dark",
                 });
-             setavatarPreview("/images/default_avatar.png")
              setavatar("")
-             setupdate(false)
               setisloading(false)
              } catch (error) {
-                setupdate(false)
               setisloading(false)
-              console.log(error.response);
-            
+              console.log(error);
               toast.error(error.response.data.message, {
                   position:"bottom-center",
                   theme:"dark",

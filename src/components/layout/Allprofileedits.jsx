@@ -2,15 +2,12 @@ import React, { useContext, useState } from 'react';
 import createusercontextdata from '../../context/Usercontext';
 import { Link } from 'react-router-dom';
 
-const Allprofileedit = () => {
+const Allprofileedits = () => {
     const {profileformdate,setprofileform,isupdate,allprofileformdate,setallprofileform, setmyprofile2,
         getallprofileupdate,Updateid,setupdateid ,setupdate,getprofileupdate,setavatarPreview,setavatar,avatarPreview,myprofile2, myprofile}=useContext(createusercontextdata)
-           
-           
-           
+
             const[avatarPreview2,setavatarPreview2]=useState("/images/default_avatar.png")
             const handleinputchange=(e)=>{
-   
         if(e.target.name=="avatar"){
           const reader=new FileReader()
        reader.onload=()=>{
@@ -30,7 +27,7 @@ const Allprofileedit = () => {
         }
         
     }
-    console.log(myprofile2);
+    ;
     
 
     return (
@@ -89,7 +86,7 @@ const Allprofileedit = () => {
                                    
                                      <figure className='avatar mr-3 item-rtl'>
                                         <img
-                                           src={myprofile2.avatar||avatarPreview2}
+                                           src={avatarPreview2}
                                             className='rounded-circle'
                                             alt='No Image'
                                         
@@ -124,4 +121,4 @@ const Allprofileedit = () => {
 };
 
 
-export default Allprofileedit;
+export default Allprofileedits;
