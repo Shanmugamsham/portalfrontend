@@ -8,7 +8,7 @@ import Usercontextproviderproducts from './Usercontextproviderproducts';
 import Register from '../components/layout/Register';
 import Profile from '../components/layout/Profile';
 import Myprofileupdate from '../components/layout/Myprofileupdate';
-import Allprofileedits from '../components/layout/Allprofileedit';
+import Allprofileedits from '../components/layout/Allprofileedits';
 
 
 
